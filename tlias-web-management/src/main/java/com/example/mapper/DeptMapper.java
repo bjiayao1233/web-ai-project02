@@ -3,8 +3,6 @@ package com.example.mapper;
 
 import com.example.entity.Dept;
 import org.apache.ibatis.annotations.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
