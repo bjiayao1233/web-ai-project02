@@ -67,6 +67,8 @@ public class DeptController {
         log.info("删除部门信息，id={}",id);
         deptService.deleteById(id);
         return Result.success();// 返回成功
+
+
     }
 
     /*
