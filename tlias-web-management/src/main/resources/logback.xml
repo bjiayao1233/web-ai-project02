@@ -23,7 +23,7 @@
     </appender>
     <!--  日志输出级别  -->
     <!--all：所有日志都要输出。-->
-    <root level="info">
+    <root level="off">
         <appender-ref ref="STDOUT"/>
         <!--<appender-ref ref="FILE"/>-->
     </root>
