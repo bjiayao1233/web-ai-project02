@@ -1,0 +1,15 @@
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\controller\DeptController.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\controller\EmpController.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\entity\Dept.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\entity\Emp.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\entity\EmpExpr.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\entity\PageResult.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\entity\Result.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\mapper\DeptMapper.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\mapper\EmpExprMapper.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\mapper\EmpMapper.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\service\DeptService.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\service\EmpService.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\service\impl\DeptServiceImpl.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\service\impl\EmpServiceImpl.java
+F:\JB\web-ai-project02\tlias-web-management\src\main\java\com\example\TliasWebManagementApplication.java

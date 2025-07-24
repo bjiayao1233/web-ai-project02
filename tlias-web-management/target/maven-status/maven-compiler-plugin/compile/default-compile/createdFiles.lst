@@ -1,0 +1,15 @@
+com\example\entity\Dept.class
+com\example\mapper\DeptMapper.class
+com\example\service\impl\EmpServiceImpl.class
+com\example\mapper\EmpExprMapper.class
+com\example\service\EmpService.class
+com\example\mapper\EmpMapper.class
+com\example\entity\EmpExpr.class
+com\example\service\impl\DeptServiceImpl.class
+com\example\entity\PageResult.class
+com\example\TliasWebManagementApplication.class
+com\example\controller\DeptController.class
+com\example\entity\Result.class
+com\example\controller\EmpController.class
+com\example\entity\Emp.class
+com\example\service\DeptService.class
