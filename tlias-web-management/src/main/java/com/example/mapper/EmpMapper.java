@@ -3,9 +3,7 @@ package com.example.mapper;
 
 import com.example.entity.Emp;
 import com.example.entity.EmpQueryParm;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,4 +29,9 @@ public interface EmpMapper {
                           LocalDate end
     );*/
     public List<Emp> list(EmpQueryParm empQueryParm);
+
+    @Options(useGeneratedKeys = true,keyProperty = "id")
+    @Insert ("     insert emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
+            "values ( #{username},#{name},#{gender}, #{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
+    void insert(Emp emp);
 }

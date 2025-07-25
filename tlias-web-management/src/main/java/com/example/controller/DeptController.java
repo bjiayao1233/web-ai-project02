@@ -71,6 +71,7 @@ public class DeptController {
     /*
      * 添加部门信息
      * controller将添加的id给service，service调用mapper删添加数据
+     * @RequestBody注解将请求体中的JSON数据转换为Dept对象
      * */
     @PostMapping
     public Result add(@RequestBody Dept dept) {

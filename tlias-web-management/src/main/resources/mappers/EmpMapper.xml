@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.EmpMapper">
-    <!-- 你的SQL语句 -->
 
     <select id="list" resultType="com.example.entity.Emp">
         select emp.*, dept.name deptName

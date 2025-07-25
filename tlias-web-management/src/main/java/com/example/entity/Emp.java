@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,5 +28,7 @@ public class Emp {
     private LocalDateTime updateTime; //修改时间
     //封装部门名称
     private String deptName;
+
+    private List<EmpExpr> exprList;
 
 }
