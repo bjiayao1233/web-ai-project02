@@ -1,18 +1,17 @@
 package com.example.service.impl;
 
 
-import com.example.entity.Emp;
-import com.example.entity.EmpExpr;
-import com.example.entity.EmpQueryParm;
-import com.example.entity.PageResult;
+import com.example.entity.*;
 import com.example.mapper.EmpExprMapper;
 import com.example.mapper.EmpMapper;
+import com.example.service.EmpLogService;
 import com.example.service.EmpService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
@@ -29,6 +28,9 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpExprMapper empExprMapper;
+
+    @Autowired
+    private EmpLogService empLogService;
 
     @Override
     public PageResult<Emp> page(EmpQueryParm empQueryParm) {
@@ -68,20 +70,28 @@ public class EmpServiceImpl implements EmpService {
         Page<Emp> p = (Page<Emp>) list;
         return new PageResult<>(p.getTotal(),p.getResult());
     }*/
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void save(Emp emp) {
         //输入信息
-        emp.setCreateTime(LocalDateTime.now());
-        emp.setUpdateTime(LocalDateTime.now());
-        empMapper.insert(emp);
-        //如果有工作经历信息，则插入工作经历
-        List<EmpExpr> exprList = emp.getExprList();
-        if (!CollectionUtils.isEmpty(exprList)) {
-            exprList.forEach(empExpr -> {
-                empExpr.setEmpId(emp.getId());
-                System.out.println(empExpr.getEmpId());
-            });
-            empExprMapper.insertBatch(exprList);
+        try {
+            emp.setCreateTime(LocalDateTime.now());
+            emp.setUpdateTime(LocalDateTime.now());
+            empMapper.insert(emp);
+            //如果有工作经历信息，则插入工作经历
+            List<EmpExpr> exprList = emp.getExprList();
+            if (!CollectionUtils.isEmpty(exprList)) {
+                exprList.forEach(empExpr -> {
+                    empExpr.setEmpId(emp.getId());
+                    System.out.println(empExpr.getEmpId());
+                });
+                empExprMapper.insertBatch(exprList);
+            }
+        } finally {
+            EmpLog empLog = new EmpLog(emp.getId(), LocalDateTime.now(), "新增员工信息" + emp);
+            empLogService.insertLog(empLog);
         }
+
+
     }
 }

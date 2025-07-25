@@ -35,6 +35,7 @@ public class EmpController {
     @PostMapping
     public Result save(@RequestBody Emp emp){
         empService.save(emp);
+
         return Result.success();
     }
 
