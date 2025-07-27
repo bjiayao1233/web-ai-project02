@@ -30,8 +30,19 @@ public interface EmpMapper {
     );*/
     public List<Emp> list(EmpQueryParm empQueryParm);
 
+    /**
+     * 新增员工基本信息
+     * @param emp
+     */
     @Options(useGeneratedKeys = true,keyProperty = "id")
     @Insert ("     insert emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
             "values ( #{username},#{name},#{gender}, #{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
     void insert(Emp emp);
+
+
+    /**
+     * 根基ID删除员工信息
+     * @param ids
+     */
+    void deleteByIds(List<Integer> ids);
 }

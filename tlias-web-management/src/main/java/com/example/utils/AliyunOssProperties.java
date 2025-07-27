@@ -1,4 +1,4 @@
-package com.example.entity;
+package com.example.utils;
 
 
 import lombok.Data;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss")
-public class AliyunOssProperites {
+public class AliyunOssProperties {
     private String endpoint;
     private String bucketName;
     private String region;

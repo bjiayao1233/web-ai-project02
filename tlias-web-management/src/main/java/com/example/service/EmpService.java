@@ -7,6 +7,7 @@ import com.example.entity.PageResult;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 public interface EmpService {
@@ -21,4 +22,11 @@ public interface EmpService {
     * 保存员工信息
     * */
     void save(Emp emp);
+
+    /**
+     * 根据员工Id批量删除员工信息
+     * @param ids
+     */
+    void delete(List<Integer> ids);
 }
+

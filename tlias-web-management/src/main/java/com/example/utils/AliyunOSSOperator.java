@@ -4,9 +4,7 @@ import com.aliyun.oss.*;
 import com.aliyun.oss.common.auth.CredentialsProviderFactory;
 import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.common.comm.SignVersion;
-import com.example.entity.AliyunOssProperites;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +15,7 @@ import java.util.UUID;
 @Component
 public class AliyunOSSOperator {
     @Autowired
-    private AliyunOssProperites aliyunOssProperites;
+    private AliyunOssProperties aliyunOssProperties;
     //方式一 "value注解
     /*@Value("${aliyun.oss.endpoint}")
     private String endpoint;
@@ -26,12 +24,15 @@ public class AliyunOSSOperator {
     @Value("${aliyun.oss.region}")
     private String region;*/
 
-    private String endpoint= aliyunOssProperites.getEndpoint();
-    private String bucketName= aliyunOssProperites.getBucketName();
-    private String region= aliyunOssProperites.getRegion();
-
 
     public String upload(byte[] content, String originalFilename) throws Exception {
+        /*
+        * 不能放在函数外边，要不然会在属性注入前获取不到属性值，会报空指针异常
+        * */
+         String endpoint = aliyunOssProperties.getEndpoint();
+         String bucketName = aliyunOssProperties.getBucketName();
+         String region = aliyunOssProperties.getRegion();
+
         // 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET。
         EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
 

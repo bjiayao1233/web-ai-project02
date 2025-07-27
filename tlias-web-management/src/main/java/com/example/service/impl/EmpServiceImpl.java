@@ -94,4 +94,14 @@ public class EmpServiceImpl implements EmpService {
 
 
     }
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public void delete(List<Integer> ids) {
+        //批量删除员工基本信息
+        empMapper.deleteByIds(ids);
+        //批量删除员工工作经历
+        empExprMapper.deleteByIds(ids);
+    }
+
 }
