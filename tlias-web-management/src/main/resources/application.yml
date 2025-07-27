@@ -10,8 +10,7 @@ spring:
       max-file-size: 10MB
 #      最大请求大小
       max-request-size: 100MB
-
-
+      enabled: true
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
@@ -23,5 +22,9 @@ logging:
   level:
     org.springframework.jdbc.support.JdbcTransactionManager: debug
 
-
-
+#阿里云OSss配置
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: jy-java
+    region: cn-beijing

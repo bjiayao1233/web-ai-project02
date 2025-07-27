@@ -37,9 +37,8 @@ public class Demo {
                 .build();
 
         try {
-            File file = new File("D:\\images\\123.jpg");
+            File file = new File("D:\\images\\111.jpg");
             byte[] content = Files.readAllBytes(file.toPath());
-
             ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(content));
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
