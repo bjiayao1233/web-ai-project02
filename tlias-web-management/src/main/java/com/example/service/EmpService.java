@@ -19,7 +19,7 @@ public interface EmpService {
 
 
     /*
-    * 插入保存员工信息
+    * 保存员工信息
     * */
     void save(Emp emp);
 
@@ -28,18 +28,5 @@ public interface EmpService {
      * @param ids
      */
     void delete(List<Integer> ids);
-
-    /**
-     * 根据id查询员工信息
-     * @param id
-     * @return
-     */
-    Emp getInfo(Integer id);
-
-    /**
-     * 修改员工信息
-     * @param emp
-     */
-    void update(Emp emp);
 }
 

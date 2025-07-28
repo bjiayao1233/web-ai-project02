@@ -49,24 +49,4 @@ public class EmpController {
     }
 
 
-    /**
-     * 根据id查询员工信息
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id}")
-    public Result getImfo(@PathVariable Integer id){
-        log.info("根据id查询员工信息，id={}", id);
-        Emp emp= empService.getInfo(id);
-        return Result.success(emp);
-    }
-
-    @PutMapping
-    public Result update(@RequestBody Emp emp){
-        log.info("更新员工信息，emp={}", emp);
-        empService.update(emp);
-        return Result.success();
-    }
-
-
 }

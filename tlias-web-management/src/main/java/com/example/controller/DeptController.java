@@ -105,7 +105,6 @@ public class DeptController {
     /*
      * 修改部门信息
      * */
-// @RequestBody:   以让前端发送的 JSON 数据自动映射到对应的实体类
     @PutMapping
     public Result update(@RequestBody Dept dept) {
         //System.out.println("修改部门信息：" + dept);
