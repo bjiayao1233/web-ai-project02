@@ -5,8 +5,8 @@ import com.example.entity.Emp;
 import com.example.entity.EmpQueryParm;
 import org.apache.ibatis.annotations.*;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -45,4 +45,12 @@ public interface EmpMapper {
      * @param ids
      */
     void deleteByIds(List<Integer> ids);
+
+
+    void update(Emp emp);
+
+    Emp getById(Integer id);
+
+    @MapKey("pos")
+    List<Map<String,Object>> countEmpJobData();
 }
