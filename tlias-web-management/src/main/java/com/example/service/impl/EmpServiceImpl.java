@@ -33,6 +33,11 @@ public class EmpServiceImpl implements EmpService {
     @Autowired
     private EmpLogService empLogService;
 
+    /**
+     * 分页查询员工信息
+     * @param empQueryParm
+     * @return
+     */
     @Override
     public PageResult<Emp> page(EmpQueryParm empQueryParm) {
         //1.设置分页参数（pagehelper）
@@ -40,7 +45,7 @@ public class EmpServiceImpl implements EmpService {
         //2.执行查询
         List<Emp> list = empMapper.list(empQueryParm);
         //3.解析查询结果
-        Page<Emp> p = (Page<Emp>) list;
+        Page<Emp> p = (Page<Emp>) list;//将pagehelper的分页结果转为mybatis的分页结果
         return new PageResult<>(p.getTotal(), p.getResult());
     }
 
@@ -71,6 +76,11 @@ public class EmpServiceImpl implements EmpService {
         Page<Emp> p = (Page<Emp>) list;
         return new PageResult<>(p.getTotal(),p.getResult());
     }*/
+
+    /**
+     * 保存员工信息和员工经历（使用@Transactional注解使得两个插入同时成功）
+     * @param emp
+     */
     @Transactional(rollbackFor = {Exception.class})
     @Override
     public void save(Emp emp) {
@@ -92,10 +102,12 @@ public class EmpServiceImpl implements EmpService {
             EmpLog empLog = new EmpLog(emp.getId(), LocalDateTime.now(), "新增员工信息" + emp);
             empLogService.insertLog(empLog);
         }
-
-
     }
 
+    /**
+     * 批量删除员工信息和员工经历（使用@Transactional注解使得两个插入同时成功）
+     * @param ids
+     */
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public void delete(List<Integer> ids) {
@@ -109,9 +121,13 @@ public class EmpServiceImpl implements EmpService {
         return empMapper.getById(id);
     }
 
+    /**
+     * 修改员工信息和员工经历
+     * @param emp
+     */
     @Override
     public void update(Emp emp) {
-        emp.setCreateTime(LocalDateTime.now());
+        //emp.setCreateTime(LocalDateTime.now());
         emp.setUpdateTime(LocalDateTime.now());
         //1.根据Id修改员工基本信息
         empMapper.update(emp);
@@ -122,6 +138,16 @@ public class EmpServiceImpl implements EmpService {
             exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(exprList);
         }
+    }
+
+    /**
+     * 查询所有员工信息
+     * @return
+     */
+    @Override
+    public List<Emp> findAll() {
+        List<Emp> list= empMapper.findAll();
+        return list;
     }
 
 }

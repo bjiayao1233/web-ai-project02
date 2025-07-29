@@ -22,6 +22,11 @@ public class EmpController {
 
     @Autowired
     private EmpService empService;
+    @GetMapping("/list")
+    public Result findAll(){
+        List<Emp> list = empService.findAll();
+        return Result.success(list);
+    }
 
     @GetMapping
     public Result page(EmpQueryParm empQueryParm) {
@@ -36,15 +41,19 @@ public class EmpController {
     @PostMapping
     public Result save(@RequestBody Emp emp){
         empService.save(emp);
-
         return Result.success();
     }
 
+
+    /**
+     * 批量删除员工信息
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     public Result delete(@RequestParam List<Integer> ids){
         log.info("删除员工信息，ids={}", ids);
         empService.delete(ids);
-
         return Result.success();
     }
     /**
@@ -59,6 +68,11 @@ public class EmpController {
         return Result.success(emp);
     }
 
+    /**
+     * 更新员工信息
+     * @param emp
+     * @return
+     */
     @PutMapping
     public Result update(@RequestBody Emp emp){
         log.info("更新员工信息，emp={}", emp);

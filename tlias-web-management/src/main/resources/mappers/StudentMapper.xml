@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.StudentMapper">
+    <insert id="add">
+        insert into student(name, no, gender, phone, degree, clazz_id, id_card, is_college, address,
+                            graduation_date)
+        values (#{name}, #{no}, #{gender}, #{phone}, #{degree}, #{clazzId}, #{idCard}, #{isCollege}, #{address},
+                #{graduationDate})
+    </insert>
+    <update id="update">
+        update student
+        <set>
+            <if test="name!=null and name !=''">name=#{name},</if>
+            <if test="no!=null and no !=''">no=#{no},</if>
+            <if test="gender!=null ">gender=#{gender},</if>
+            <if test="phone!=null and phone !=''">phone=#{phone},</if>
+            <if test="degree!=null ">`degree`= #{degree},</if>
+            <if test="idCard!=null and idCard!=''">id_card=#{idCard},</if>
+            <if test="isCollege=!null and isCollege!=''">is_college=#{isCollege},</if>
+            <if test="address!=null and address!=''">address=#{address},</if>
+            <if test="graduationDate!=null">graduation_date=#{graduationDate},</if>
+            <if test="violationCount!=null and violationCount!=''">violation_count=#{violationCount},</if>
+            <if test="violationScore!=null and violationScore!=''">violation_score=#{violationScore},</if>
+            <if test="clazzId!=null">clazz_id=#{clazzId},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+        </set>
+        <where>id=#{id}</where>
+    </update>
+    <update id="updateViolation">
+        update student set violation_score=violation_score+#{violationScore},violation_count=violation_count+1 where id=#{id};
+    </update>
+
+    <delete id="delete">
+        delete from student where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <select id="list" resultType="com.example.entity.Student">
+        select student.*,(case
+        when `degree` = 1 then '班主任'
+        when `degree` = 2 then '讲师'
+        when `degree` = 3 then '学工主管'
+        when `degree` = 4 then '教研主管'
+        when `degree` = 5 then '咨询师'
+        else '未知职位' end) deg, clazz.name clazzName from student left join clazz on student.clazz_id = clazz.id
+        <where>
+            <if test="name!=null and name!=''">
+                student.name like concat('%',#{name},'%')
+            </if>
+            <if test="degree!=null">
+                and `degree` = #{degree}
+            </if>
+            <if test="clazzId!=null ">
+                and clazz_id = #{clazzId}
+            </if>
+        </where>
+    </select>
+    <select id="getInfo" resultType="com.example.entity.Student">
+        select *
+        from student
+        where id = #{id}
+    </select>
+
+    <select id="countStudentData" resultType="java.util.Map">
+        select (case
+                    when clazz_id = 1 then 'Java就业168期'
+                    when clazz_id = 2 then 'JavaEE就业167期'
+                    when clazz_id = 3 then '大数据就业58期'
+                    when clazz_id = 4 then 'JavaEE就业166期'
+                    when clazz_id = 5 then 'JavaEE就业165期'
+                    when clazz_id = 6 then '前端就业90期'
+                    when clazz_id = 7 then 'JavaEE就业163期'
+                    else '未选择课程' end) clazzName,
+               count(*) sum
+        from student
+        group by clazzName order by sum
+    </select>
+
+    <select id="countStudentDegreeData" resultType="java.util.Map">
+        select (case
+                    when `degree` = 1 then '初中'
+                    when `degree` = 2 then '高中'
+                    when `degree` = 3 then '大专'
+                    when `degree` = 4 then '本科'
+                    when `degree` = 5 then '硕士'
+                    else '未知学历' end) name,
+               count(*) value
+        from student
+        group by `degree`;
+    </select>
+</mapper>

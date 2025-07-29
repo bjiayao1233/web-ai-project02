@@ -40,12 +40,21 @@ public class DeptServiceImpl implements DeptService {
         deptMapper.add(dept);
     }
 
+    /**
+     * 根据id查询部门信息（查询回显）
+     * @param id
+     * @return
+     */
     @Override
     public Dept getById(Integer id) {
 
         return deptMapper.getById(id);
     }
 
+    /**
+     * 修改部门信息
+     * @param dept
+     */
     @Override
     public void update(Dept dept) {
         dept.setUpdateTime(LocalDateTime.now());
