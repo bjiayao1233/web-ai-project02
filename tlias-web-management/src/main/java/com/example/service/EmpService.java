@@ -3,6 +3,7 @@ package com.example.service;
 
 import com.example.entity.Emp;
 import com.example.entity.EmpQueryParm;
+import com.example.entity.LoginInfo;
 import com.example.entity.PageResult;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +49,12 @@ public interface EmpService {
      * @return
      */
     List<Emp> findAll();
+
+    /**
+     * 登录
+     * @param emp
+     * @return
+     */
+    LoginInfo login(Emp emp);
 }
 

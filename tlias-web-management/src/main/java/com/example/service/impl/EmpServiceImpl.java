@@ -6,8 +6,10 @@ import com.example.mapper.EmpExprMapper;
 import com.example.mapper.EmpMapper;
 import com.example.service.EmpLogService;
 import com.example.service.EmpService;
+import com.example.utils.JwtUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -35,6 +35,7 @@ public class EmpServiceImpl implements EmpService {
 
     /**
      * 分页查询员工信息
+     *
      * @param empQueryParm
      * @return
      */
@@ -79,6 +80,7 @@ public class EmpServiceImpl implements EmpService {
 
     /**
      * 保存员工信息和员工经历（使用@Transactional注解使得两个插入同时成功）
+     *
      * @param emp
      */
     @Transactional(rollbackFor = {Exception.class})
@@ -106,6 +108,7 @@ public class EmpServiceImpl implements EmpService {
 
     /**
      * 批量删除员工信息和员工经历（使用@Transactional注解使得两个插入同时成功）
+     *
      * @param ids
      */
     @Override
@@ -116,6 +119,7 @@ public class EmpServiceImpl implements EmpService {
         //批量删除员工工作经历
         empExprMapper.deleteByIds(ids);
     }
+
     @Override
     public Emp getInfo(Integer id) {
         return empMapper.getById(id);
@@ -123,6 +127,7 @@ public class EmpServiceImpl implements EmpService {
 
     /**
      * 修改员工信息和员工经历
+     *
      * @param emp
      */
     @Override
@@ -134,7 +139,7 @@ public class EmpServiceImpl implements EmpService {
         //2.修改工作经历信息   (1)根据id删除所有员工工作经历  （2）再添加员工新的工作经历（将一个员工的所有工作经历绑定成一个id）
         empExprMapper.deleteByIds(Arrays.asList(emp.getId()));
         List<EmpExpr> exprList = emp.getExprList();
-        if (!CollectionUtils.isEmpty(exprList)){
+        if (!CollectionUtils.isEmpty(exprList)) {
             exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(exprList);
         }
@@ -142,12 +147,32 @@ public class EmpServiceImpl implements EmpService {
 
     /**
      * 查询所有员工信息
+     *
      * @return
      */
     @Override
     public List<Emp> findAll() {
-        List<Emp> list= empMapper.findAll();
+        List<Emp> list = empMapper.findAll();
         return list;
+    }
+
+    /**
+     * 登录
+     * @param emp
+     * @return
+     */
+    @Override
+    public LoginInfo login(Emp emp) {
+        Emp e = empMapper.selectByUsernameAndPassword(emp);
+        if (e != null) {
+            Map<String, Object> claims =new HashMap<>();
+             claims.put("id",e.getId());
+             claims.put("username",e.getUsername());
+            String jwt = JwtUtils.generateJwt(claims);
+            log.info("");
+            return new LoginInfo(e.getId(),e.getUsername(),e.getName(), jwt);
+        }
+        return null;
     }
 
 }

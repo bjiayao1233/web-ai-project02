@@ -90,5 +90,6 @@ public interface EmpMapper {
     @Select("select * from emp")
     List<Emp> findAll();
 
-
+    @Select("select  id,username,name from emp where username=#{username} and password=#{password}")
+    Emp selectByUsernameAndPassword(Emp emp);
 }
